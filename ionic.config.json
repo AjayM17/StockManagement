@@ -1,0 +1,7 @@
+{
+  "name": "Stock Mangement",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
