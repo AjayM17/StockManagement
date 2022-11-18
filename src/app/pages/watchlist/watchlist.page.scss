@@ -1,0 +1,39 @@
+.header-items {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 24px;
+    align-items: center;
+  
+    .title {
+      font-size: 28px;
+      font-weight: 500;
+    }
+  
+    .add_btn {
+      --box-shadow: none;
+      text-transform: capitalize;
+    }
+  }
+
+  ion-modal{
+    ion-content{
+      ion-input{
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        font-size: 14px;
+        margin-bottom: 6px;
+        margin-top: 8px;
+      }
+    }
+    ion-footer{
+      display: flex;
+      justify-content: flex-end;
+      padding: 8px;
+      ion-button{
+        margin-right: 20px;
+        --box-shadow:none;
+        text-transform: capitalize;
+      }
+    }
+  }
+  

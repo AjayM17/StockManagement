@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="header-items">
+      <ion-title> Holdings</ion-title>
+      <ion-button class="add_btn" (click)="addHolding('add')">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  <ion-grid>
+    <ion-row>
+      <div>
+        Name
+      </div>
+      <div>
+        Quantity
+      </div>
+      <div>
+        Buying Price
+      </div>
+      <div>
+        Time Frame
+      </div>
+      <div>
+        Stop Loss Price
+      </div>
+
+      <div>
+        Risk Value
+      </div>
+      <div>
+        Investment
+      </div>
+      <div>
+
+      </div>
+    </ion-row>
+    <div *ngFor="let holding of holdings" class="row-container">
+      <ion-row >
+        <div>
+          {{holding.name}}
+        </div>
+        <div>
+          {{holding.quantity}}
+        </div>
+        <div>
+          {{holding.buying_price}}
+        </div>
+        <div>
+          {{holding.time_frame}}
+        </div>
+        <div>
+          {{holding.stop_loss}}
+        </div>
+        <div>
+          {{holding.buying_price | riskAbsoluteValue : holding['stop_loss']: holding['quantity']}}
+        </div>
+        <div>
+          {{holding.buying_price * holding.quantity}}
+        </div>
+        <div>
+          <ion-icon name="ellipsis-vertical-outline" (click)="actions($event,holding.id)"></ion-icon>
+        </div>
+      </ion-row>
+      <div>
+        <ion-chip style="    margin-right: 16px;" (click)="showTags(holding.id)"> Technical Score <span style="padding-left: 16px;"> {{holding.tags | technicalScore}}</span>
+        </ion-chip>
+        <ion-chip style="    margin-right: 16px;"> Risk  <span style="padding-left: 16px;"> {{holding['buying_price'] | riskPercentage:holding['stop_loss']}} </span></ion-chip>
+      </div>
+    </div>
+  </ion-grid>
+  <ion-modal style="    --height: 200px;"  [isOpen]="isSellingModalOpen" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <div style="margin-top: 16px;">
+          <ion-label>Enter Selling Price </ion-label>
+          <ion-input style="    border: 1px solid #ddd;
+          margin: 16px 0px;"  [(ngModel)]="selling_price"></ion-input>
+          <ion-label class="error_msg" *ngIf="selling_modal_submit && selling_price == ''">Please Enter Selling Price</ion-label>
+        </div>
+        
+      </ion-content>
+      <ion-footer>
+        <ion-button (click)="cancel()">Cancel</ion-button>
+        <ion-button (click)="addToHistory()" [strong]="true">Save</ion-button>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+</ion-content>

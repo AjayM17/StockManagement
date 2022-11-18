@@ -1,0 +1,36 @@
+[{
+    "key_name":"name",
+    "name":"Name",
+    "order":1
+  },
+  {
+    "key_name":"quantity",
+    "name":"Quantity",
+    "order":2
+  },
+  {
+    "key_name":"buying_price",
+    "name":"Buying Price",
+    "order":3
+  },{
+    "key_name":"stop_loss",
+    "name":"Stop Loss",
+    "order":4
+  },
+  {
+    "key_name":"risk_value_in_per",
+    "name":"Risk Value %",
+    "order":5
+  },
+  {
+    "key_name":"risk_value",
+    "name":"Risk Value",
+    "order":6
+  },
+  {
+    "key_name":"investment",
+    "id":"7",
+    "name":"Investment",
+    "order":7
+  }
+]

@@ -1,0 +1,65 @@
+ion-list{
+    padding: 0px !important;
+    margin-bottom: 12px;
+}
+
+ion-label, .label{
+    color: #444444;
+}
+
+.labelForVal{
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 3px;
+    background: #eee;
+    color: #444444;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 56px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 4px;
+    ion-text{
+        padding: 12px 0px;
+    }
+    ion-icon{
+        padding: 12px
+    }
+}
+
+.details{
+    padding: 10px 32px;
+    justify-content: space-around;
+    display: flex;
+    font-size: 15px;
+    font-weight: 500;
+}
+ion-list {
+    padding: 10px 16px;
+
+    ion-input {
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        font-size: 14px;
+        margin-bottom: 6px;
+        margin-top: 8px;
+    }
+
+    .error_msg {
+        font-size: 12px;
+        color: red;
+        margin-left: 6px;
+    }
+}
+
+ion-button {
+    text-transform: capitalize;
+    margin-right: 16px;
+    --box-shadow: none;
+}

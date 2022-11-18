@@ -1,0 +1,33 @@
+ion-header{
+    
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 30px;
+    /* border-bottom: 1px solid #ddd; */
+    margin-bottom: 10px;
+        ion-text{
+            padding: 12px 0px;
+        }
+        ion-icon{
+            padding: 12px
+        }
+    
+}
+
+
+ion-item{
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+ion-footer{
+    padding: 16px;
+    display: flex;
+    flex-direction: row-reverse;
+    ion-button{
+        --box-shadow:none
+    }
+}

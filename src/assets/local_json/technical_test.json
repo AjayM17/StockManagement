@@ -1,0 +1,63 @@
+[
+    {
+        "id": 1,
+        "step": 1,
+        "action_types":"next_step",
+        "label": "Is price is above $time_frame 200 EMA?",
+        "options": [
+            {
+                "id": 11,
+                "next_action":"next_step",
+                "value": "Yes",
+                "next_step_id": 2
+            },
+            {
+                "id": 12,
+                "value": "No",
+                "next_step_id": 3
+            }
+        ]
+    }, {
+        "id": 2,
+        "step": 2,
+        "action_types":"next_step",
+        "label": "Is price between Range Bound/ Breakout/ Uptrend?",
+        "options": [
+            {
+                "id": 21,
+                "value": "Range Bound",
+                "next_step_id": 3
+            },
+            {
+                "id": 22,
+                "value": "Breakout",
+                "next_step_id": 1
+            },{
+                "id": 23,
+                "value": "Uptrend",
+                "next_step_id": 4
+            }
+        ]
+    }, {
+        "id":3,
+        "step":3,
+        "action_types":"done",
+        "label":"Dont trade in this stock",
+        "options":[{
+            "id":31,
+            "label": "Exit",
+            "next_action": "stop"
+        }]
+    },
+    {
+        "id":4,
+        "step":4,
+        "action_types":"done",
+        "label":"Test Passed , Add Stock in Next Buying",
+        "options":[{
+            "id":31,
+            "label": "Exit",
+            "next_action": "stop"
+        }]
+    }
+]

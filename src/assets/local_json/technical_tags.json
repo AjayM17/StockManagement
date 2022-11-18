@@ -1,0 +1,149 @@
+{
+    "max_score":8,
+    "questions":[
+    {
+        "question_id": 1,
+        "question_title": "Daily 200 Exponential Moving Average",
+        "question_desc": "D 200 EMA",
+        "options": [
+            {
+                "option_id": 11,
+                "name": "Near Above  Daily 200 EMA",
+                "value": 1
+            },
+            {
+                "option_id": 12,
+                "name": "Above Daily 200 EMA",
+                "value": 2
+            },
+            {
+                "option_id": 13,
+                "name": "Near Below Daily 200",
+                "value": -1
+            }
+        ]
+    },
+    {
+        "question_id": 2,
+        "question_title": "Price Range Bound Zone",
+        "question_desc": "Breakout Zone",
+        "options": [
+            {
+                "option_id": 22,
+                "name": "Near Breakout Line",
+                "value": 1
+            },
+            {
+                "option_id": 23,
+                "name": "Near Support Line",
+                "value": 1
+            },
+            {
+                "option_id": 21,
+                "name": "Above Breakout Line",
+                "value": 2
+            },
+            {
+                "option_id": 24,
+                "name": "Inside Range Bound",
+                "value": -2
+            }
+        ]
+    },
+    {
+        "question_id": 3,
+        "question_title": "Higher Top Higher Bottom",
+        "question_desc": "Higher Top Higher Bottom",
+        "options": [
+            {
+                "option_id": 31,
+                "name": "Second Bottom Near To Support Line",
+                "value": 1
+            },
+            {
+                "option_id": 32,
+                "name": "Second Top Near To Breakout Line ",
+                "value": 1
+            },
+            {
+                "option_id": 34,
+                "name": "Second Top Above To Breakout Line ",
+                "value": 2
+            },
+            {
+                "option_id": 33,
+                "name": "Second Top Below To Support Line ",
+                "value": -2
+            }
+        ]
+    },
+    {
+        "question_id": 6,
+        "question_title": "MACD",
+        "question_desc": "MACD",
+        "options": [
+            {
+                "option_id": 61,
+                "name": "Positive",
+                "value": 1
+            },
+            {
+                "option_id": 62,
+                "name": "Negative",
+                "value": -1
+            }
+        ]
+    },
+    {
+        "question_id": 4,
+        "question_title": "RSI",
+        "question_desc": "RSI",
+        "options": [
+            {
+                "option_id": 41,
+                "name": "Over Bought",
+                "value": -1
+            },
+            {
+                "option_id": 42,
+                "name": "Over Sold",
+                "value": -1
+            }
+        ]
+    },
+    {
+        "question_id": 5,
+        "question_title": "Candle Formation",
+        "question_desc": "Candle Formation",
+        "options": [
+            {
+                "option_id": 51,
+                "name": "Yes",
+                "value": 1
+            },
+            {
+                "option_id": 52,
+                "name": "No",
+                "value": -1
+            }
+        ]
+    },
+    {
+        "question_id": 7,
+        "question_title": "Is Far From Breakout Zone",
+        "question_desc": "Is Far From Breakout Zone",
+        "options": [
+            {
+                "option_id": 71,
+                "name": "Yes",
+                "value": -1
+            },
+            {
+                "option_id": 72,
+                "name": "No",
+                "value": 1
+            }
+        ]
+    }
+]
+}

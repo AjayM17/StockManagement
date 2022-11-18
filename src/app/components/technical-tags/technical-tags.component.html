@@ -1,0 +1,18 @@
+<ion-content>
+  <div *ngFor="let question of quesitons">
+    <ion-item>
+      {{question.question_title}}
+    </ion-item>
+    <ion-chip *ngFor="let option of question.options" (click)="selectTag(question.question_id, option.option_id, option.value)" [style.background-color]="getBgColor(option.option_id, option.value)">
+      <ion-label  [style.color]="getTextColor(option.option_id)"> {{option.name}}</ion-label>
+    </ion-chip>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button (click)="done()">
+    Done
+  </ion-button>
+  <ion-button (click)="cancel()">
+    Cancel
+  </ion-button>
+</ion-footer>

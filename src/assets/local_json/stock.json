@@ -1,0 +1,24 @@
+[
+    {
+        "name":"ADANIPORT",
+        "quantity":2,
+        "buying_price":966,
+        "stop_loss":880,
+        "risk_value_in_per":0,
+        "risk_value":0,
+        "investment":0,
+        "stratedy":"",
+        "notes":""
+    },
+    {
+        "name":"AMBUJACEMENT",
+        "quantity":2,
+        "buying_price":966,
+        "stop_loss":880,
+        "risk_value_in_per":0,
+        "risk_value":0,
+        "investment":0,
+        "stratedy":"",
+        "notes":""
+    }
+]

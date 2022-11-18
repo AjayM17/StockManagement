@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="header-items">
+      <ion-title> Holdings</ion-title>
+      <ion-button class="add_btn" (click)="addHolding('add')">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  
+      <div *ngFor="let holding of holdings" style="color: #444444;
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0px;
+      margin-bottom: 6px;" (click)="actions(holding.id)">
+        <div style="    display: flex;
+        justify-content: space-between;">
+          <div>
+            {{holding.name}}({{holding.quantity}})
+          </div>
+         <div>
+         Invest {{holding.buying_price * holding.quantity}}
+         </div>
+        </div>
+        <div style="    display: flex;
+        justify-content: space-between;     margin-top: 8px;">
+          <div>
+            SL {{holding.stop_loss}}
+          </div>
+          <div style="font-size: 14px;">
+            Risk ({{holding['buying_price'] | riskPercentage:holding['stop_loss']}}% | {{holding.buying_price | riskAbsoluteValue : holding['stop_loss']: holding['quantity']}})
+          </div>
+          <!-- <div>
+           Risk Val {{holding.buying_price | riskAbsoluteValue : holding['stop_loss']: holding['quantity']}}
+          </div>
+          -->
+        </div>
+      </div>
+   
+  <ion-modal style="    --height: 200px;"  [isOpen]="isSellingModalOpen" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <div style="margin-top: 16px;">
+          <ion-label>Enter Selling Price </ion-label>
+          <ion-input style="    border: 1px solid #ddd;
+          margin: 16px 0px;"  [(ngModel)]="selling_price"></ion-input>
+          <ion-label class="error_msg" *ngIf="selling_modal_submit && selling_price == ''">Please Enter Selling Price</ion-label>
+        </div>
+        
+      </ion-content>
+      <ion-footer>
+        <ion-button (click)="cancel()">Cancel</ion-button>
+        <ion-button (click)="addToHistory()" [strong]="true">Save</ion-button>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+</ion-content>

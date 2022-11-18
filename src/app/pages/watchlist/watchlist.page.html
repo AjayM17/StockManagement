@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="header-items">
+      <ion-title> WatchList</ion-title>
+      <ion-button id="open-modal">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        Name
+      </ion-col>
+      <ion-col>
+
+      </ion-col>
+    </ion-row>
+    <div *ngFor="let watchlist of watchlists">
+      <ion-row >
+        <ion-col>
+          {{watchlist.name}}
+        </ion-col>
+        <ion-col>
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+      
+    </div>
+  </ion-grid>
+  <ion-modal class="watchlist"  trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Add New In Watchlist</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div style="margin-top: 16px;">
+          <ion-label>Enter Name </ion-label>
+          <ion-input  [(ngModel)]="name"></ion-input>
+          <ion-label class="error_msg" *ngIf="submit && name == ''">Please Enter Name</ion-label>
+        </div>
+        
+      </ion-content>
+      <ion-footer>
+        <ion-button (click)="cancel()">Cancel</ion-button>
+        <ion-button (click)="save()" [strong]="true">Save</ion-button>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+</ion-content>
