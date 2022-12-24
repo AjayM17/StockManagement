@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SidebarComponent } from './sidebar.component';
+import { FavouritePage } from './favourite.page';
 
-describe('SidebarComponent', () => {
-  let component: SidebarComponent;
-  let fixture: ComponentFixture<SidebarComponent>;
+describe('FavouritePage', () => {
+  let component: FavouritePage;
+  let fixture: ComponentFixture<FavouritePage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidebarComponent ],
+      declarations: [ FavouritePage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SidebarComponent);
+    fixture = TestBed.createComponent(FavouritePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

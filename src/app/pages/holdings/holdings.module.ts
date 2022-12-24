@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { HoldingsPageRoutingModule } from './holdings-routing.module';
 
 import { HoldingsPage } from './holdings.page';
-
-import { SidebarComponent } from '../../components/sidebar/sidebar.component'
 import { CustomPipesModule } from '../../pipes/custom_pipes.module'
 // import { AddStockComponent } from "../../components/add-stock/add-stock.component";
 import { TechnicalTagsComponent } from 'src/app/components/technical-tags/technical-tags.component';
@@ -25,7 +23,7 @@ import { HoldingActionsComponent } from 'src/app/components/holding-actions/hold
     CustomPipesModule,
     ReactiveFormsModule
   ],
-  declarations: [HoldingsPage,  SidebarComponent,
+  declarations: [HoldingsPage,
     HoldingActionsComponent,
     AddHoldingComponent,TechnicalTagsComponent]
 })

@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="font-size: 16px">Dashboard (1.1.1)</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card style="    margin-top: 16px;">
+    <ion-card-header>
+      <ion-card-title>Total Invest Value </ion-card-title>
+      <ion-card-title>{{totalInvestVal}} </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card style="    margin-top: 16px;">
+    <ion-card-header>
+      <ion-card-title>Total Risk Value </ion-card-title>
+      <ion-card-title>{{totalRiskVal}} </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card style="    margin-top: 16px;">
+    <ion-card-header>
+      <ion-card-title>Risk Percentage </ion-card-title>
+      <ion-card-title>{{getRiskPercentage()}} </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+</ion-content>

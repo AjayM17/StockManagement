@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc } from '@angular/fire/firestore';
 import { Holding } from 'src/app/modals/holding';
 import { Watchlist } from 'src/app/modals/watchlist';
+import { query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +23,25 @@ export class FirestoreService {
     return addDoc(holdingRef, holding);
   }
 
-  getHoldings(): Observable<Holding[]> {
+  getHoldings(status): Observable<Holding[]> {
     const holdingRef = collection(this.firestore, 'holdings');
+    if(status != "All"){
+      const statusq = query(holdingRef, where("status", "==", status))
+      return collectionData(statusq, { idField: 'id' }) as Observable<Holding[]>;
+    }
     return collectionData(holdingRef, { idField: 'id' }) as Observable<Holding[]>;
+  }
+
+  getHoldingsByName(name:String): Observable<Holding[]> {
+    const holdingRef = collection(this.firestore, 'holdings');
+   
+      const typeq = query(holdingRef, where("name", "==", name))
+      return collectionData(typeq, { idField: 'id' }) as Observable<Holding[]>;
   }
 
   updateHolding(holding: Holding) {
     const holdingDocRef = doc(this.firestore, `holdings/${holding.id}`);
-    return updateDoc(holdingDocRef, { name: holding.name, quantity: holding.quantity, buying_price: holding.buying_price, time_frame: holding.time_frame, stop_loss: holding.stop_loss });
+    return updateDoc(holdingDocRef, { name: holding.name, trade_date:holding.trade_date, status:holding.status, quantity: holding.quantity, buying_price: holding.buying_price, stop_loss: holding.stop_loss, support_200_ema: holding.support_200_ema });
   }
 
   updateHoldingTag(id, tags) {

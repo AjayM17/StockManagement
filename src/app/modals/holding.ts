@@ -1,11 +1,12 @@
 export interface Holding {
     created_at?:number,
+    trade_date:String,
+    status:String,
     id?: String,
     name: String,
     quantity: number,
     buying_price: number,
-    time_frame:String,
     stop_loss: number,
-    tags?:String,
-    selling_price?:String
+    target_price:number,
+    support_200_ema: String
 }

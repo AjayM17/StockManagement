@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'holdings',
+    redirectTo: 'tabs',
     pathMatch: 'full'
   },
   {
@@ -22,6 +22,18 @@ const routes: Routes = [
   {
     path: 'watchlist',
     loadChildren: () => import('./pages/watchlist/watchlist.module').then( m => m.WatchlistPageModule)
+  },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule)
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
+  {
+    path: 'favourite',
+    loadChildren: () => import('./pages/favourite/favourite.module').then( m => m.FavouritePageModule)
   },
 ];
 

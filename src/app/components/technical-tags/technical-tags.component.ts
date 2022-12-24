@@ -18,9 +18,9 @@ export class TechnicalTagsComponent implements OnInit {
   constructor(private modalController: ModalController, private firestoreService : FirestoreService) { }
 
   ngOnInit() { 
-    if(this.holding.tags != undefined){
-      this.selectedTags = JSON.parse(this.holding.tags.toString())
-    }
+    // if(this.holding.tags != undefined){
+    //   this.selectedTags = JSON.parse(this.holding.tags.toString())
+    // }
   }
 
   selectTag(question_id, option_id, value) {

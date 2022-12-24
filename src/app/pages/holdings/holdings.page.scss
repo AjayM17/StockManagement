@@ -3,6 +3,14 @@
   justify-content: space-between;
   padding: 14px 24px;
   align-items: center;
+  ion-icon{
+    background: #666666ad;
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 15px;
+    margin-left: 10px;
+  }
 
   .title {
     font-size: 28px;
@@ -22,6 +30,11 @@
     font-weight: 500;
     font-size: 18px;
     background: white;
+}
+
+ion-content{
+  --padding-start: 16px;
+  --padding-end: 16px;
 }
 
 ion-grid {
