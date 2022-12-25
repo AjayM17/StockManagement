@@ -51,6 +51,7 @@ export class AddHoldingComponent implements OnInit {
       stop_loss: ['', [Validators.required, Validators.pattern(this.decimal_regx)]],
       target_price:[''],
       support_200_ema: ['',Validators.required],
+      tags:['']
     })
     if (this.action == "edit") {
       this.btn_action_title = "Update"
@@ -161,7 +162,8 @@ export class AddHoldingComponent implements OnInit {
           buying_price: this.addForm.controls.buying_price.value,
           stop_loss: this.addForm.controls.stop_loss.value,
           target_price: this.addForm.controls.target_price.value,
-          support_200_ema: this.addForm.controls.support_200_ema.value
+          support_200_ema: this.addForm.controls.support_200_ema.value,
+          tags: this.addForm.controls.tags.value
         }).then(res => {
           this.utilService.dismiss()
           this.utilService.presentToast("top", "Holding Updated !", "success").then(() => {
@@ -182,7 +184,8 @@ export class AddHoldingComponent implements OnInit {
           buying_price: this.addForm.controls.buying_price.value,
           stop_loss: this.addForm.controls.stop_loss.value,
           target_price: this.addForm.controls.target_price.value,
-          support_200_ema: this.addForm.controls.support_200_ema.value
+          support_200_ema: this.addForm.controls.support_200_ema.value,
+          tags: this.addForm.controls.tags.value
         }).then(res => {
           this.utilService.dismiss()
           this.utilService.presentToast("top", "Holding Added !", "success").then(() => {

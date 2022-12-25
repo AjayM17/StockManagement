@@ -8,5 +8,6 @@ export interface Holding {
     buying_price: number,
     stop_loss: number,
     target_price:number,
-    support_200_ema: String
+    support_200_ema: String,
+    tags:String
 }

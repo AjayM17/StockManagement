@@ -79,12 +79,18 @@ export class RiskAbsoluteValue implements PipeTransform {
 export class TechnicalScore implements PipeTransform {
   max_score = TechnicalTags["max_score"]
   score = 0
-  transform(tag: string): string {
-    const tags = JSON.parse(tag.toString())
-    tags.forEach(tag => {
-      this.score += tag.value
-    })
-    return (((this.score / this.max_score) * 100).toFixed(2) + "%")
+  transform(tag: string): number {
+    console.log(tag)
+    if(tag != undefined){
+      const tags = JSON.parse(tag.toString())
+      tags.forEach(tag => {
+        this.score += tag.value
+      })
+      console.log(this.score)
+      return  Number(((this.score / this.max_score) * 100).toFixed(2) )
+    }
+    return 0
+   
   }
 }
 
