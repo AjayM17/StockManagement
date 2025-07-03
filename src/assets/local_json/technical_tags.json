@@ -1,142 +1,87 @@
 {
-    "max_score":9,
-    "questions":[
-    {
-        "question_id": 1,
-        "question_title": "Daily 200 Exponential Moving Average",
-        "question_desc": "D 200 EMA",
-        "options": [
-            {
-                "option_id": 11,
-                "name": "Near Above  Daily 200 EMA",
-                "value": 1
-            },
-            {
-                "option_id": 12,
-                "name": "Above Daily 200 EMA",
-                "value": 2
-            },
-            {
-                "option_id": 13,
-                "name": "Near Below Daily 200 EMA",
-                "value": -1
-            }
-        ]
-    },
-    {
-        "question_id": 2,
-        "question_title": "Price Range Bound Zone",
-        "question_desc": "Breakout Zone",
-        "options": [
-            {
-                "option_id": 22,
-                "name": "Near Breakout Line",
-                "value": 1
-            },
-            {
-                "option_id": 23,
-                "name": "Near Support Line",
-                "value": 1
-            },
-            {
-                "option_id": 21,
-                "name": "Above Breakout Line",
-                "value": 2
-            },
-            {
-                "option_id": 24,
-                "name": "Inside Range Bound",
-                "value": -2
-            },
-            {
-                "option_id": 25,
-                "name": "Not Unkown",
-                "value": -2
-            }
-        ]
-    },
-    {
-        "question_id": 3,
-        "question_title": "Higher Top Higher Bottom",
-        "question_desc": "Higher Top Higher Bottom",
-        "options": [
-            {
-                "option_id": 31,
-                "name": "Lower Top Lower Bottom",
-                "value": -2
-            },
-            {
-                "option_id": 32,
-                "name": "Lower Top Higher Bottom",
-                "value": 1
-            },
-            {
-                "option_id": 33,
-                "name": "Higher Top Higher Bottom",
-                "value": 2
-            },
-            {
-                "option_id": 34,
-                "name": "Not Unkown",
-                "value": -2
-            }
-        ]
-    },
-    {
-        "question_id": 6,
-        "question_title": "MACD",
-        "question_desc": "MACD",
-        "options": [
-            {
-                "option_id": 61,
-                "name": "Positive",
-                "value": 1
-            },
-            {
-                "option_id": 62,
-                "name": "Negative",
-                "value": -1
-            }
-        ]
-    },
-    {
-        "question_id": 4,
-        "question_title": "RSI",
-        "question_desc": "RSI",
-        "options": [
-            {
-                "option_id": 41,
-                "name": "Over Bought",
-                "value": -1
-            },
-            {
-                "option_id": 42,
-                "name": "Over Sold",
-                "value": -1
-            },
-            {
-                "option_id": 43,
-                "name": "None",
-                "value": 1
-            }
-        ]
-    },
-    {
-        "question_id": 5,
-        "question_title": "Candle Formation",
-        "question_desc": "Candle Formation",
-        "options": [
-            {
-                "option_id": 51,
-                "name": "Yes",
-                "value": 2
-            },
-            {
-                "option_id": 52,
-                "name": "No",
-                "value": -2
-            }
-        ]
-    }
-]
+    "tags": [
+        {
+            "tag_category_id": 1,
+            "tag_category_title": "Support time frame",
+            "tag_categories": [
+                {
+                    "id": 11,
+                    "label": "Monthly"
+                },
+                {
+                    "id": 12,
+                    "label": "Weekly"
+                },
+                {
+                    "id": 13,
+                    "label": "Daily"
+                },
+                {
+                    "id": 14,
+                    "label": "3 Hr"
+                },
+                {
+                    "id": 15,
+                    "label": "2 Hr"
+                },
+                {
+                    "id": 16,
+                    "label": "1 Hr"
+                },
+                {
+                    "id": 17,
+                    "label": "30 Min"
+                },
+                {
+                    "id": 18,
+                    "label": "15 Min"
+                }
+            ]
+        },
+        {
+            "tag_category_id": 2,
+            "tag_category_title": "Support EMA",
+            "tag_categories": [
+                {
+                    "id": 21,
+                    "label": "200 EMA"
+                },
+                {
+                    "id": 22,
+                    "label": "100 EMA"
+                },
+                {
+                    "id": 23,
+                    "label": "50 EMA"
+                },
+                {
+                    "id": 24,
+                    "label": "20 EMA"
+                }
+            ]
+        },
+        {
+            "tag_category_id": 3,
+            "tag_category_title": "Duration",
+            "tag_categories": [
+                {
+                    "id": 31,
+                    "label": "Long Term"
+                },
+                {
+                    "id": 32,
+                    "label": "Mid Term"
+                },
+                {
+                    "id": 33,
+                    "label": "Short Term"
+                },
+                {
+                    "id": 34,
+                    "label": "Ultra Short"
+                }
+            ]
+        }
+
+    ]
 }

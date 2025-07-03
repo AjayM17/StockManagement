@@ -8,17 +8,17 @@ import { environment } from 'src/environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaxRiskValue, RiskAbsoluteValue, RiskPercentage } from './pipes/custom-pipes.pipe';
+import { MaxRiskValue, RiskValue, RiskPercentage } from './pipes/custom-pipes.pipe';
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+  imports: [BrowserModule, IonicModule.forRoot({mode:'ios'}), AppRoutingModule,
     ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore())
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },RiskAbsoluteValue, RiskPercentage, MaxRiskValue],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },RiskValue, RiskPercentage, MaxRiskValue],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

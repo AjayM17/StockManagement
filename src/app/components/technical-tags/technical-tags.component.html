@@ -1,9 +1,44 @@
-<ion-content>
-  <div *ngFor="let question of quesitons">
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Add Tags</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="category-container" *ngFor="let category of tags">
+    <div class="category-header">
+      <h2>{{ category.tag_category_title }}</h2>
+      <span class="selected-tag" *ngIf="getSelectedTag(category.tag_category_id)">
+        ({{ getSelectedTag(category.tag_category_id)?.label }})
+      </span>
+    </div>
+
+    <div class="chip-container">
+      <ion-chip *ngFor="let tag of category.tag_categories" (click)="selectTag(category.tag_category_id, tag)"
+        [class.selected]="isSelected(category.tag_category_id, tag)">
+        <ion-label>{{ tag.label }}</ion-label>
+      </ion-chip>
+    </div>
+
+    <div class="separator"></div> <!-- Separator -->
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button (click)="done()">
+    Done
+  </ion-button>
+  <ion-button (click)="cancel()">
+    Cancel
+  </ion-button>
+</ion-footer>
+
+<!-- <ion-content>
+  <div *ngFor="let tag of tags">
     <ion-item>
-      {{question.question_title}}
+      {{tag.category_title}}
     </ion-item>
-    <ion-chip *ngFor="let option of question.options" (click)="selectTag(question.question_id, option.option_id, option.value)" [style.background-color]="getBgColor(option.option_id, option.value)">
+    <ion-chip *ngFor="let type of tag.categories" (click)="selectTag(question.question_id, option.option_id, option.value)" [style.background-color]="getBgColor(option.option_id, option.value)">
       <ion-label  [style.color]="getTextColor(option.option_id)"> {{option.name}}</ion-label>
     </ion-chip>
   </div>
@@ -15,4 +50,4 @@
   <ion-button (click)="cancel()">
     Cancel
   </ion-button>
-</ion-footer>
+</ion-footer> -->

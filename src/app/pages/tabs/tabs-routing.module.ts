@@ -27,11 +27,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'favourite',
+        path: 'settings',
         children: [
           {
             path: '',
-            loadChildren: () => import('../favourite/favourite.module').then( m => m.FavouritePageModule)
+            loadChildren: () => import('../settings/settings.module').then( m => m.SettingsPageModule)
           }
         ]
       },

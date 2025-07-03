@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilService } from 'src/app/services/util/util.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsPage implements OnInit {
 
-  constructor() { }
+  count = 0;
+  constructor(private utilService: UtilService) { }
 
   ngOnInit() {
+    this.utilService.count$.subscribe( count => {
+      this.count = count
+    })
   }
 
 }

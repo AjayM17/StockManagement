@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'tabs',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '',
+  //   redirectTo: 'tabs',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'up-comming',
     loadChildren: () => import('./pages/up-comming/up-comming.module').then( m => m.UpCommingPageModule)
@@ -35,6 +35,11 @@ const routes: Routes = [
     path: 'favourite',
     loadChildren: () => import('./pages/favourite/favourite.module').then( m => m.FavouritePageModule)
   },
+  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+
 ];
 
 @NgModule({

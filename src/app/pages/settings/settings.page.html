@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+  <ion-list lines="none">
+    <ion-label>Capital To Invest
+    </ion-label>
+    <ion-input formControlName="capital"></ion-input>
+    <ion-label class="error_msg" *ngIf="isFormSubmitted && settingsFormControl.capital.errors"> Please Enter Capital Amount </ion-label>
+  </ion-list>
+  <ion-list lines="none">
+    <ion-label>Max Stop Loss Amount
+    </ion-label>
+    <ion-input formControlName="max_sl_amount"></ion-input>
+    <ion-label class="error_msg" *ngIf="isFormSubmitted && settingsFormControl.max_sl_amount.errors"> Please Enter Max Stop Loss Amount </ion-label>
+  </ion-list>
+  <ion-list lines="none">
+    <ion-label>Max Holding Limit
+    </ion-label>
+    <ion-input formControlName="max_holding_limit"></ion-input>
+    <ion-label class="error_msg" *ngIf="isFormSubmitted && settingsFormControl.max_holding_limit.errors">Please Enter Max Holding Limit</ion-label>
+  </ion-list>
+  <ion-list lines="none">
+    <ion-label>Max Trade Amount
+    </ion-label>
+    <ion-input formControlName="max_trade_amount"></ion-input>
+    <ion-label class="error_msg" *ngIf="isFormSubmitted && settingsFormControl.max_trade_amount.errors"> Please Enter Max Trade Amount
+    </ion-label>
+  </ion-list>
+
+  <ion-list lines="none">
+    <!-- <ion-button (click)="closeModal()">Cancel</ion-button> -->
+    <ion-button type="submit"  [disabled]="!settingsForm.valid">{{btn_action_title}}</ion-button>
+  </ion-list>
+</form>
+</ion-content>

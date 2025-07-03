@@ -64,11 +64,11 @@ export class RiskPercentage implements PipeTransform {
 }
 
 @Pipe({
-  name: 'riskAbsoluteValue'
+  name: 'riskValue'
 })
-export class RiskAbsoluteValue implements PipeTransform {
-  transform(buy_price: number = 0, stop_loss: number = 0, quantity = 0): string {
-    return ((stop_loss - buy_price) * quantity).toFixed(2)
+export class RiskValue implements PipeTransform {
+  transform(buy_price: number = 0, stop_loss: number = 0, quantity = 0): number {
+    return parseFloat(((stop_loss - buy_price) * quantity).toFixed(2))
   }
 }
 
@@ -80,13 +80,11 @@ export class TechnicalScore implements PipeTransform {
   max_score = TechnicalTags["max_score"]
   score = 0
   transform(tag: string): number {
-    console.log(tag)
     if(tag != undefined){
       const tags = JSON.parse(tag.toString())
       tags.forEach(tag => {
         this.score += tag.value
       })
-      console.log(this.score)
       return  Number(((this.score / this.max_score) * 100).toFixed(2) )
     }
     return 0
@@ -116,5 +114,40 @@ export class Days implements PipeTransform {
   }
 }
 
+@Pipe({
+  name: 'age'
+})
+export class Age implements PipeTransform {
+  
+transform(value: string | Date): number {
+  if (!value) return 0;
+
+  const birthDate = new Date(value);
+  if (isNaN(birthDate.getTime())) {
+    console.warn('Invalid date:', value);
+    return 0;
+  }
+
+  const today = new Date();
+  // Normalize both dates to midnight to avoid time-of-day errors
+  const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const birthDateMidnight = new Date(birthDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+
+  const timeDiff = Math.abs(todayMidnight.getTime() - birthDateMidnight.getTime());
+  const ageInDays = Math.floor(timeDiff / (1000 * 3600 * 24));
+  
+  return ageInDays;
+}
+}
+
+@Pipe({
+  name: 'roundOff'
+})
+export class RoundOff implements PipeTransform {
+  
+  transform(value: number): string {
+    return value.toFixed(2);
+  }
+}
 
 

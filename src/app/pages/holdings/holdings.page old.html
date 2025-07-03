@@ -5,87 +5,94 @@
     </ion-buttons>
     <div class="header-items">
       <ion-title> Holdings</ion-title>
-      <ion-button class="add_btn" (click)="addHolding('add')">
-        <ion-icon slot="start" name="add"></ion-icon>
-        Add
-      </ion-button>
+      <ion-icon name="filter-outline" (click)="filterActions()"></ion-icon>
+      <ion-icon name="options-outline"></ion-icon>
+      <ion-icon slot="start" name="add" (click)="addHolding('add')"></ion-icon>
     </div>
   </ion-toolbar>
+  <ion-searchbar style="background: white;" mode="ios" (ionChange)="search($event)"></ion-searchbar>
 </ion-header>
 <ion-content [fullscreen]="true">
+  <ion-card *ngFor="let holding of searchHolding"
+    [style.border-color]="isInProfit(holding.buying_price, holding.stop_loss, holding.quantity) ? '#28ba62' : '#eb445a'"
+    style="
+  color: #444444;
+  padding: 12px;
+    margin: 16px 0px;
+  " >
+    <div style="
+  color: white;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;">
 
-  <ion-grid>
-    <ion-row>
-      <div>
-        Name
-      </div>
-      <div>
-        Quantity
-      </div>
-      <div>
-        Buying Price
-      </div>
-      <div>
-        Time Frame
-      </div>
-      <div>
-        Stop Loss Price
-      </div>
+      <span *ngIf="holding.status == 'Active'" style="    font-size: 14px;
+      background-color: #2c88a8;
+      border-radius: 3px;
+      padding: 5px 20px;">
+        {{holding.status}}
+      </span>
 
+      <span *ngIf="holding.status == 'Waiting'" style=" font-size: 14px;border-radius: 3px; background-color: '#8f952e';padding: 5px 20px;">
+        {{holding.status}}
+      </span>
+      <ion-chip style="padding-inline: 12px; color: white; margin: 0px;" (click)="showTags(holding.id)" [style.background]="(holding.tags | technicalScore) > 50 ? '#129209' : '#fb0303'"> Score <span style="padding-left: 16px;"> {{holding.tags | technicalScore}} %</span>
+      </ion-chip>
+    </div>
+    <div (click)="actions(holding.id)">
+    <div style=" margin-top: 8px;   display: flex;
+        justify-content: space-between;">
       <div>
-        Risk Value
+        {{holding.name}} ({{holding.quantity}})
       </div>
       <div>
-        Investment
-      </div>
-      <div>
-
-      </div>
-    </ion-row>
-    <div *ngFor="let holding of holdings" class="row-container">
-      <ion-row >
-        <div>
-          {{holding.name}}
-        </div>
-        <div>
-          {{holding.quantity}}
-        </div>
-        <div>
-          {{holding.buying_price}}
-        </div>
-        <div>
-          {{holding.time_frame}}
-        </div>
-        <div>
-          {{holding.stop_loss}}
-        </div>
-        <div>
-          {{holding.buying_price | riskAbsoluteValue : holding['stop_loss']: holding['quantity']}}
-        </div>
-        <div>
-          {{holding.buying_price * holding.quantity}}
-        </div>
-        <div>
-          <ion-icon name="ellipsis-vertical-outline" (click)="actions($event,holding.id)"></ion-icon>
-        </div>
-      </ion-row>
-      <div>
-        <ion-chip style="    margin-right: 16px;" (click)="showTags(holding.id)"> Technical Score <span style="padding-left: 16px;"> {{holding.tags | technicalScore}}</span>
-        </ion-chip>
-        <ion-chip style="    margin-right: 16px;"> Risk  <span style="padding-left: 16px;"> {{holding['buying_price'] | riskPercentage:holding['stop_loss']}} </span></ion-chip>
+        Invest {{holding.buying_price * holding.quantity}}
       </div>
     </div>
-  </ion-grid>
-  <ion-modal style="    --height: 200px;"  [isOpen]="isSellingModalOpen" (willDismiss)="onWillDismiss($event)">
+    <div style="    margin-top: 10px;
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;">
+      <div>
+        SL {{holding.stop_loss}} | EP {{holding.buying_price}} 
+      </div>
+      <div>
+        Risk ({{holding['buying_price'] | riskPercentage:holding['stop_loss']}}% | {{holding.buying_price |
+        riskValue : holding['stop_loss']: holding['quantity']}})
+      </div>
+    
+
+    </div>
+    <div style="    display: flex;
+    justify-content: space-between;    ">
+      <div style="font-size: 14px;">
+        <div style="    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;">
+          Age: {{holding.trade_date | days}}
+        </div>
+      </div>
+      <div style="    font-size: 14px;
+    
+    margin-top: 10px;">
+       EMA: {{holding.support_200_ema}}
+      </div>
+    </div>
+  </div>
+  </ion-card>
+
+  <ion-modal style="--height: 200px;" [isOpen]="isSellingModalOpen" (willDismiss)="onWillDismiss($event)">
     <ng-template>
       <ion-content class="ion-padding">
         <div style="margin-top: 16px;">
           <ion-label>Enter Selling Price </ion-label>
           <ion-input style="    border: 1px solid #ddd;
-          margin: 16px 0px;"  [(ngModel)]="selling_price"></ion-input>
-          <ion-label class="error_msg" *ngIf="selling_modal_submit && selling_price == ''">Please Enter Selling Price</ion-label>
+          margin: 16px 0px;" [(ngModel)]="selling_price"></ion-input>
+          <ion-label class="error_msg" *ngIf="selling_modal_submit && selling_price == ''">Please Enter Selling Price
+          </ion-label>
         </div>
-        
+
       </ion-content>
       <ion-footer>
         <ion-button (click)="cancel()">Cancel</ion-button>

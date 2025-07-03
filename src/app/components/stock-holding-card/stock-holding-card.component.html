@@ -1,0 +1,37 @@
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{ stock.name }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-item>
+      <ion-label>Buy Price:</ion-label>
+      <ion-note slot="end">{{ stock.buyPrice | currency }}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Stop-Loss Price:</ion-label>
+      <ion-note slot="end">{{ stock.slPrice | currency }}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Amount:</ion-label>
+      <ion-note slot="end">{{ stock.amount }}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Profit/Loss (%) :</ion-label>
+      <ion-note [color]="stock.profitLossPercentage >= 0 ? 'success' : 'danger'" slot="end">
+        {{ stock.profitLossPercentage | number:'1.2-2' }}%
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Profit/Loss (Amount):</ion-label>
+      <ion-note [color]="stock.profitLossAmount >= 0 ? 'success' : 'danger'" slot="end">
+        {{ stock.profitLossAmount | currency }}
+      </ion-note>
+    </ion-item>
+  </ion-card-content>
+</ion-card>

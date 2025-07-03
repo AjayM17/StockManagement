@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastController, LoadingController } from '@ionic/angular';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 
 @Injectable({
@@ -8,6 +8,8 @@ import { Subject } from 'rxjs';
 })
 export class UtilService {
 
+ private countSubject = new BehaviorSubject<any>(null);
+  public count$ = this.countSubject.asObservable();
   investAmount = 0
   riskAmount = 0
   private loading: any
@@ -63,5 +65,9 @@ export class UtilService {
 
   getTotalInvestment(){
     return this.investAmount
+  }
+
+  updateHoldingCountOnTabs(count:any){
+    this.countSubject.next(count)
   }
 }

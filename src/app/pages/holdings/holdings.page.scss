@@ -3,7 +3,8 @@
   justify-content: space-between;
   padding: 14px 24px;
   align-items: center;
-  ion-icon{
+
+  ion-icon {
     background: #666666ad;
     color: white;
     padding: 5px;
@@ -22,43 +23,101 @@
     text-transform: capitalize;
   }
 }
-.header-content{
+
+.header-content {
   display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500;
-    font-size: 18px;
-    background: white;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 18px;
+  background: white;
 }
 
-ion-content{
+ion-content {
   --padding-start: 16px;
   --padding-end: 16px;
+
+  ion-card {
+    .details {
+
+
+      padding: 4px;
+      display: flex;
+      justify-content: space-between;
+      // margin: 28px 0px;
+
+      .container {
+        padding: 7px;
+        flex: 1;
+
+        .item {
+          padding: 3px 0px;
+
+          .title {
+            font-size: 12px;
+            margin-right: 6px;
+
+          }
+
+          .name {
+            text-transform: uppercase;
+            font-weight: 500;
+            color: #000000;
+            font-size: 14px;
+          }
+
+          .value {
+            // margin-left: 8px;
+            color: #000000;
+            font-size: 14px;
+          }
+
+          .positive {
+            color: #28ba62;
+          }
+
+          .negative {
+            color: #eb445a;
+          }
+        }
+      }
+
+    }
+
+    .breakdown_label {
+      text-align: center;
+      font-weight: 500;
+      color: rgb(56, 128, 255);
+      font-size: 14px;
+      padding: 6px 10px;
+      background: #eee;
+    }
+
+    .breakdown_container {
+      .list {
+
+        border-top: 1px solid #ddd;
+      }
+    }
+  }
 }
 
 ion-grid {
-.row-container{
-  background: #f9f9f9;
-  padding: 6px 10px;
-  margin-top: 18px;
-  border-bottom: 1px solid #ddd;
-  border-top: 1px solid #ddd;
-}
-  ion-row{
-    background: #f9f9f9;
-   
-    padding: 12px 4px;
-    div{
-      text-align: center;
-      width: 12%;
-    }
+  padding: 16px;
+
+  ion-row {
+    align-items: center;
   }
-  ion-chip{
-    
-    span{
-      font-weight: bold;
-     
-    }
+
+  .row_one {
+    color: grey;
+    font-weight: 300;
+    font-size: 16px;
   }
+
+  .row_two {
+    font-size: 20px;
+  }
+
 }

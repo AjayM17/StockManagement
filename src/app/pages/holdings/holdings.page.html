@@ -1,85 +1,108 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <div class="header-items">
-      <ion-title> Holdings</ion-title>
+      <ion-title> {{selectedStatusType?.text}}</ion-title>
       <ion-icon name="filter-outline" (click)="filterActions()"></ion-icon>
-      <ion-icon name="options-outline"></ion-icon>
-      <ion-icon slot="start" name="add" (click)="addHolding('add')"></ion-icon>
+      <!-- <ion-icon name="options-outline"></ion-icon> -->
+      <ion-icon slot="start" name="add" (click)="addHolding('initial')"></ion-icon>
+    </div>
+    <div>
+      <ion-grid>
+        <ion-row class="row_one">
+          <ion-col>
+            Invested
+          </ion-col>
+          <ion-col style="text-align: right;">
+            Current
+          </ion-col>
+        </ion-row>
+        <ion-row class="row_two">
+          <ion-col>
+            {{investment| roundOff}}
+          </ion-col>
+          <ion-col style="text-align: right;">
+            {{investment + pnl_val | roundOff}}
+          </ion-col>
+        </ion-row>
+        <ion-row class="row_two">
+          <ion-col>
+            P&L
+          </ion-col>
+          <ion-col style="text-align: right;" [style.color]="pnl_val > 0 ? '#28ba62' :'#eb445a'">
+            {{pnl_val | roundOff}} <span style="font-size: 11px;">({{getPnlPer()}})</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
   </ion-toolbar>
-  <ion-searchbar style="background: white;" mode="ios" (ionChange)="search($event)"></ion-searchbar>
+  <!-- <ion-searchbar style="background: white;" mode="ios" (ionChange)="search($event)"></ion-searchbar> -->
 </ion-header>
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let holding of searchHolding"
-    [style.border-color]="isInProfit(holding.buying_price, holding.stop_loss, holding.quantity) ? '#28ba62' : '#eb445a'"
-    style="
-  color: #444444;
-  padding: 12px;
-    margin: 16px 0px;
-  " >
-    <div style="
-  color: white;
-    font-weight: 500;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;">
+  <ion-card *ngFor="let group_holding of groupedHoldings; let group_holding_index = index"  >
+    <div class="details" (click)="actions(null,group_holding_index,'groupHolding')">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between;align-items: center">
+          <div class="item"><span class="title">Qty</span> <span class="value">{{group_holding.quantity}}</span></div>
+          <!-- <span>|</span>
+          <div class="item"><span class="title">Age</span>(<span class="value" style="margin-left: 0px;">{{group_holding.trade_date | age}}</span><span> days</span>)</div> -->
+        </div>
 
-      <span *ngIf="holding.status == 'Active'" style="    font-size: 14px;
-      background-color: #2c88a8;
-      border-radius: 3px;
-      padding: 5px 20px;">
-        {{holding.status}}
-      </span>
+        <div class="item" style="    margin-top: 12px;"><span class="name"> {{group_holding.name}}</span> </div>
+        <div class="item"><span class="title">Invested</span> </div>
+        <div class="item"> <span class="value"> {{(group_holding.buying_price *
+            group_holding.quantity) | roundOff}}</span></div>
+      </div>
 
-      <span *ngIf="holding.status == 'Waiting'" style=" font-size: 14px;border-radius: 3px; background-color: '#8f952e';padding: 5px 20px;">
-        {{holding.status}}
-      </span>
-      <ion-chip style="padding-inline: 12px; color: white; margin: 0px;" (click)="showTags(holding.id)" [style.background]="(holding.tags | technicalScore) > 50 ? '#129209' : '#fb0303'"> Score <span style="padding-left: 16px;"> {{holding.tags | technicalScore}} %</span>
+      <div class="container" style="text-align: right;">
+
+        <div class="item"><span class="value" [ngClass]="(group_holding.buying_price |
+          riskValue : group_holding['stop_loss']: group_holding['quantity']) > 0 ? 'positive':'negative'">
+            <span>{{group_holding.buying_price |
+              riskValue : group_holding['stop_loss']: group_holding['quantity']}} </span> <span style="font-size: 11px;">
+              ({{group_holding['buying_price'] |
+              riskPercentage:group_holding['stop_loss']}}%)</span> </span> </div>
+        <div class="item" style="    margin-top: 12px;"><span class="title">Avg</span> <span
+            class="value">{{group_holding.buying_price}} </span></div>
+        <div class="item"><span class="title">SL/Exit</span> <span class="value">{{group_holding.stop_loss}}</span></div>
+        <!-- <div class="item"><span class="title">Follow</span> <span
+            class="value">{{group_holding.support_time_frame}}-{{group_holding.support_ema}}</span></div> -->
+      </div>
+    </div>
+
+    <div class="selected-tags-container" *ngIf="group_holding.tags.length > 0">
+      <ion-chip *ngFor="let tag of group_holding.tags" class="selected-chip">
+        <ion-label>{{ tag?.label }}</ion-label>
       </ion-chip>
     </div>
-    <div (click)="actions(holding.id)">
-    <div style=" margin-top: 8px;   display: flex;
-        justify-content: space-between;">
-      <div>
-        {{holding.name}} ({{holding.quantity}})
-      </div>
-      <div>
-        Invest {{holding.buying_price * holding.quantity}}
-      </div>
-    </div>
-    <div style="    margin-top: 10px;
-    display: flex;
-    font-size: 14px;
-    justify-content: space-between;">
-      <div>
-        SL {{holding.stop_loss}} | EP {{holding.buying_price}} 
-      </div>
-      <div>
-        Risk ({{holding['buying_price'] | riskPercentage:holding['stop_loss']}}% | {{holding.buying_price |
-        riskAbsoluteValue : holding['stop_loss']: holding['quantity']}})
-      </div>
-    
 
-    </div>
-    <div style="    display: flex;
-    justify-content: space-between;    ">
-      <div style="font-size: 14px;">
-        <div style="    font-size: 14px;
-    font-weight: 600;
-    margin-top: 10px;">
-          Age: {{holding.trade_date | days}}
+    <div class="breakdown_container" *ngIf="group_holding.showBreakdown">
+      <div *ngFor="let holding of group_holding.breakdowns" class="list" (click)="actions(holding.id,group_holding_index)">
+        <div class="details">
+          <div class="container">
+            <div style="display: flex; justify-content: space-between;align-items: center">
+              <div class="item"><span class="title">Qty</span> <span class="value">{{holding.quantity}}</span></div>
+            </div>
+           
+            <div class="item"> <span class="value"> {{(holding.buying_price *
+                holding.quantity) | roundOff}}</span></div>
+          </div>
+
+          <div class="container" style="text-align: right;">
+            <div class="item"><span class="value" [ngClass]="(holding.buying_price |
+          riskValue : holding['stop_loss']: holding['quantity']) > 0 ? 'positive':'negative'">
+                <span>{{holding.buying_price |
+                  riskValue : holding['stop_loss']: holding['quantity']}} </span> </span>  <span style="padding:0px 6px">|</span>   <span class="title">Age</span> <span class="value">{{holding.trade_date | age}}</span></div>
+            <div class="item" ><span class="title">Price</span> <span
+                class="value">{{holding.buying_price}} </span></div>
+          </div>
         </div>
       </div>
-      <div style="    font-size: 14px;
-    
-    margin-top: 10px;">
-       EMA: {{holding.support_200_ema}}
-      </div>
     </div>
-  </div>
+    <div class="breakdown_label" (click)="toggleBreakdown(group_holding_index)">{{ group_holding?.showBreakdown ? 'Hide' : 'Show' }} Breakdowns</div>
+
   </ion-card>
 
   <ion-modal style="--height: 200px;" [isOpen]="isSellingModalOpen" (willDismiss)="onWillDismiss($event)">

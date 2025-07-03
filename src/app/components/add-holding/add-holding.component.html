@@ -1,17 +1,23 @@
-<ion-list class="title" style="    margin: 0px 8px;">
-  <ion-text>Enter Details</ion-text>
-  <ion-icon name="close-outline" (click)="closeModal()"></ion-icon>
-</ion-list>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Enter Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <form [formGroup]="addForm" (ngSubmit)="addStock()">
     <ion-list lines="none">
       <ion-label>Name </ion-label>
-      <ion-input formControlName="name" (ionBlur)="checkStatus()"></ion-input>
+      <ion-input formControlName="name"></ion-input>
       <ion-label class="error_msg" *ngIf="isFormSubmitted && addFormControl.name.errors"> Please Enter Name </ion-label>
     </ion-list>
 
-    <ion-list lines="none">
+    <ion-list lines="none" >
       <ion-label>Trade Date </ion-label>
       <input type="date" style="
           border: 1px solid #ddd;
@@ -31,8 +37,8 @@
       <ion-label>Status </ion-label>
       <ion-select style=" border: 1px solid #ddd;
       margin-top: 8px;" placeholder="Type" formControlName="status">
-        <ion-select-option value="Active">Active</ion-select-option>
-        <ion-select-option value="Waiting">Waiting</ion-select-option>
+        <ion-select-option value="active">Active</ion-select-option>
+        <ion-select-option value="waiting">Waiting</ion-select-option>
       </ion-select>
       <ion-label class="error_msg" *ngIf="isFormSubmitted && addFormControl.status.errors"> Please Select Status
       </ion-label>
@@ -46,7 +52,9 @@
     </ion-list>
 
     <ion-list lines="none">
-      <ion-label>Exit/StopLoss Price  <span *ngIf="initial" style="font-size: 13px"> (Follow Daily Support Time Frame) </span></ion-label>
+      <ion-label>Exit/StopLoss Price
+        <!-- <span *ngIf="initial" style="font-size: 13px"> (Follow Daily Support Time Frame) </span> -->
+      </ion-label>
       <ion-input formControlName="stop_loss" (ionChange)="enableAddButton()"></ion-input>
       <ion-label class="error_msg" *ngIf="isFormSubmitted && addFormControl.stop_loss.errors"> Please Enter Stop Loss
         Price </ion-label>
@@ -59,9 +67,39 @@
         Price </ion-label>
     </ion-list> -->
 
-    <ion-list>
-      <ion-label>Supporting 200 EMA </ion-label>
-      <ion-select style=" border: 1px solid #ddd;
+    <ion-list style="display: none;">
+      <ion-label>Supporting EMA </ion-label>
+      <div style="display: flex">
+        <div>
+          <ion-select style=" border: 1px solid #ddd;
+        margin-top: 8px;" placeholder="Select" formControlName="support_time_frame">
+            <ion-select-option value="M">Monthly</ion-select-option>
+            <ion-select-option value="W">Weekly</ion-select-option>
+            <ion-select-option value="D">Daily</ion-select-option>
+            <ion-select-option value="4H">4 Hrs</ion-select-option>
+            <ion-select-option value="3H">3 Hrs</ion-select-option>
+            <ion-select-option value="2H">2 Hrs</ion-select-option>
+            <ion-select-option value="1H">1Hr</ion-select-option>
+          </ion-select>
+          <ion-label class="error_msg" *ngIf="isFormSubmitted && addFormControl.support_time_frame.errors"> Please
+            Select
+            Supporting Time Frame
+          </ion-label>
+        </div>
+        <div>
+          <ion-select style=" border: 1px solid #ddd;
+        margin-top: 8px; margin-left: 20px;" placeholder="Select" formControlName="support_ema">
+            <ion-select-option value="20 EMA">20 EMA</ion-select-option>
+            <ion-select-option value="50 EMA">50 EMA</ion-select-option>
+            <ion-select-option value="100 EMA">100 EMA</ion-select-option>
+            <ion-select-option value="200 EMA">200 EMA</ion-select-option>
+          </ion-select>
+          <ion-label class="error_msg" *ngIf="isFormSubmitted && addFormControl.support_ema.errors"> Please Select
+            Supporting EMA
+          </ion-label>
+        </div>
+      </div>
+      <!-- <ion-select style=" border: 1px solid #ddd;
       margin-top: 8px;" placeholder="Select" formControlName="support_200_ema">
         <ion-select-option value="M">Monthly</ion-select-option>
         <ion-select-option value="W">Weekly</ion-select-option>
@@ -76,18 +114,18 @@
         <ion-select-option value="5 MIN">5 Min</ion-select-option>
         <ion-select-option value="3 MIN">3 Min</ion-select-option>
         <ion-select-option value="1 MIN">1 Min</ion-select-option>
-      </ion-select>
-      <ion-label class="error_msg" *ngIf="isFormSubmitted && addFormControl.support_200_ema.errors"> Please Select Supporting 200 EMA
-      </ion-label>
+      </ion-select> -->
+
     </ion-list>
 
 
     <ion-list lines="none">
       <div class="label">
-        Investment <span *ngIf="initial" style="font-size: 13px"> (Max Invest Amount 10000) </span>
+        Investment
+        <!-- <span *ngIf="initial" style="font-size: 13px"> (Max Invest Amount 50000) </span> -->
       </div>
       <div class="labelForVal">
-        {{addFormControl.buying_price.value * addFormControl.quantity.value}}
+        {{(addFormControl.buying_price.value * addFormControl.quantity.value) | roundOff}}
       </div>
     </ion-list>
 
@@ -101,10 +139,28 @@
     </ion-list>
 
     <ion-list lines="none">
-      <div class="label">Risk Value <span style="font-size: 13px"> (Max Risk Amount {{maxRiskAmount}}) </span></div>
-      <div class="labelForVal">{{addFormControl.buying_price.value | riskAbsoluteValue:addFormControl.stop_loss.value :
-        addFormControl.quantity.value }}</div>
+      <div class="label">
+        Risk Value
+        <span style="font-size: 13px">
+          (Max Risk Amount - {{ max_risk_value | roundOff }})
+        </span>
+      </div>
+
+      <ion-radio-group formControlName="selectedRisk" (ionChange)="calculateRisk()" *ngIf="((this.groupHolding.stop_loss - this.groupHolding.buying_price) * this.groupHolding.quantity) > 0">
+        <div class="radio-row">
+          <ion-item *ngFor="let option of riskOptions" lines="none" class="radio-option">
+            <ion-label>{{ option.label }}</ion-label>
+            <ion-radio slot="start" [value]="option.value" class="circle-radio"></ion-radio>
+          </ion-item>
+        </div>
+      </ion-radio-group>
+
+      <div class="labelForVal">
+        {{ addFormControl.buying_price.value | riskValue:addFormControl.stop_loss.value:addFormControl.quantity.value }}
+      </div>
     </ion-list>
+
+
 
     <ion-list lines="none">
       <ion-label>Quantity </ion-label>
@@ -113,7 +169,7 @@
       </ion-label>
     </ion-list>
     <ion-list lines="none">
-     
+
 
       <ion-button type="submit" [style.--background]="btnBg" [disabled]="!enable">{{btn_action_title}}</ion-button>
       <ion-button (click)="closeModal()">Cancel</ion-button>

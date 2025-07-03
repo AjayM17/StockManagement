@@ -13,58 +13,52 @@ import TechnicalTags from '../../../assets/local_json/technical_tags.json';
 export class TechnicalTagsComponent implements OnInit {
 
   @Input("holding") holding:Holding;
-  quesitons = TechnicalTags["questions"]
-  selectedTags = []
+  tags = TechnicalTags["tags"]
+  selectedTags: { id: number, label: string, category_id: number }[] = [];
   constructor(private modalController: ModalController, private firestoreService : FirestoreService) { }
 
   ngOnInit() { 
-    if(this.holding.tags != undefined){
-      this.selectedTags = JSON.parse(this.holding.tags.toString())
-    }
+    this.selectedTags = this.holding.tags
+    // if(this.holding.tags != undefined){
+    //   this.selectedTags = JSON.parse(this.holding.tags.toString())
+    // }
   }
 
-  selectTag(question_id, option_id, value) {
-    const tag = {
-      question_id:question_id,
-      option_id:option_id,
-      value:value
-    }
-    
-    const index = this.selectedTags.findIndex( tags => tags.question_id ==  tag.question_id)
-    if(index == -1){
-      this.selectedTags.push(tag)
-    } else {
-      this.selectedTags[index]["option_id"] =  option_id
-      this.selectedTags[index]["value"] =  value
-    }
+selectTag(categoryId: number, tag: any) {
+  const isSelected = this.selectedTags.some(
+    t => t.category_id === categoryId && t.id === tag.id
+  );
+
+  if (isSelected) {
+    // Deselect the tag (toggle off)
+    this.selectedTags = this.selectedTags.filter(
+      t => !(t.category_id === categoryId && t.id === tag.id)
+    );
+  } else {
+    // Replace any existing tag in this category
+    this.selectedTags = this.selectedTags.filter(t => t.category_id !== categoryId);
+
+    // Select the new tag
+    this.selectedTags.push({
+      id: tag.id,
+      label: tag.label,
+      category_id: categoryId
+    });
+  }
+}
+
+
+  isSelected(categoryId: number, tag: any): boolean {
+    return this.selectedTags.some(t => t.category_id === categoryId && t.id === tag.id);
+  }
+
+  getSelectedTag(categoryId: number) {
+    return this.selectedTags.find(t => t.category_id === categoryId);
   }
 
 
-  getBgColor(option_id, value) {
-    const index = this.selectedTags.findIndex(tags => tags["option_id"] ==  option_id)
-    if(index != -1){
-      switch (value) {
-        case 1:
-          return "#81EE30"
-        case 2:
-          return "#129209"
-  
-        case -1:
-          return "#FD5F05"
-        case -2:
-          return "#FB0303"
-      }
-    }
-  }
 
-  getTextColor(option_id) {
-    const index = this.selectedTags.findIndex(tags => tags["option_id"] ==  option_id)
-    if(index != -1){
-     return "#ffffff"
-    } else {
-      return "#000000de"
-    }
-  }
+
 
   done(){
     this.firestoreService.updateHoldingTag(this.holding.id, JSON.stringify(this.selectedTags))
@@ -74,4 +68,6 @@ export class TechnicalTagsComponent implements OnInit {
   cancel(){
     this.modalController.dismiss()
   }
+
+  
 }
