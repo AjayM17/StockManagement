@@ -39,6 +39,15 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   },
+  {
+    path: 'stock-details/:id',
+    loadChildren: () => import('./pages/stock-details/stock-details.module').then( m => m.StockDetailsPageModule)
+  },  {
+    path: 'holding-details',
+    loadChildren: () => import('./pages/holding-details/holding-details.module').then( m => m.HoldingDetailsPageModule)
+  },
+
+
 
 ];
 

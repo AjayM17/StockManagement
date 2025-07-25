@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Holding Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="holding">
+    <h2>{{ holding.name }}</h2>
+    <p>Quantity: {{ holding.quantity }}</p>
+
+    <ion-img
+      *ngIf="holding.imageUrl"
+      [src]="holding.imageUrl"
+      class="preview"
+    ></ion-img>
+
+    <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+
+    <ion-button expand="block" (click)="uploadImage()" [disabled]="!selectedFile || isUploading">
+      {{ isUploading ? 'Uploading...' : 'Upload Image' }}
+    </ion-button>
+  </div>
+</ion-content>

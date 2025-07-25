@@ -8,7 +8,7 @@ import { AddHoldingComponent } from 'src/app/components/add-holding/add-holding.
 import { UtilService } from 'src/app/services/util/util.service';
 import { RiskValue } from 'src/app/pipes/custom-pipes.pipe';
 import { UserSettingsService } from 'src/app/services/user-settings/user-settings.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-holdings',
@@ -17,6 +17,7 @@ import { UserSettingsService } from 'src/app/services/user-settings/user-setting
 })
 export class HoldingsPage {
   @ViewChild(IonModal) modal: IonModal;
+  segmentValue = 'active'
   holdings: Holding[] = []
   groupedHoldings = []
   // searchHolding: Holding[] = []
@@ -37,6 +38,7 @@ export class HoldingsPage {
     private popoverController: PopoverController,
     private actionSheetController: ActionSheetController,
     private utilService: UtilService,
+    private router: Router,
     private riskValue: RiskValue,
     private userSettingsService: UserSettingsService,
     private modalCtrl: ModalController, private firestoreService: FirestoreService, private cd: ChangeDetectorRef) {
@@ -63,50 +65,50 @@ export class HoldingsPage {
 
       const groupedMap = new Map<string, GroupedHolding>();
 
-    this.holdings.forEach((h, index) => {
-  const name = String(h.name).trim();
-  const quantity = Number(h.quantity);
-  const price = Number(h.buying_price);
-  const stop_loss = h.stop_loss;
-  const type = h.type ?? 'initial';
+      this.holdings.forEach((h, index) => {
+        const name = String(h.name).trim();
+        const quantity = Number(h.quantity);
+        const price = Number(h.buying_price);
+        const stop_loss = h.stop_loss;
+        const type = h.type ?? 'initial';
 
-  if (!name || isNaN(quantity) || isNaN(price)) return;
+        if (!name || isNaN(quantity) || isNaN(price)) return;
 
-  if (!groupedMap.has(name)) {
-    groupedMap.set(name, {
-      name,
-      buying_price: 0,
-      stop_loss: null,
-      quantity: 0,
-      investment: 0,
-      breakdowns: [],
-      showBreakdown: false,
-      tags: [],
-      _fallbackSet: false  // 🔸 internal flag to set fallback only once
-    });
-  }
+        if (!groupedMap.has(name)) {
+          groupedMap.set(name, {
+            name,
+            buying_price: 0,
+            stop_loss: null,
+            quantity: 0,
+            investment: 0,
+            breakdowns: [],
+            showBreakdown: false,
+            tags: [],
+            _fallbackSet: false  // 🔸 internal flag to set fallback only once
+          });
+        }
 
-  const group = groupedMap.get(name)!;
+        const group = groupedMap.get(name)!;
 
-  // Add to totals
-  group.quantity += quantity;
-  group.investment += quantity * price;
+        // Add to totals
+        group.quantity += quantity;
+        group.investment += quantity * price;
 
-  // Add this item to breakdowns
-  group.breakdowns.push(h);
+        // Add this item to breakdowns
+        group.breakdowns.push(h);
 
-  // If type is 'initial', set stop_loss and tags (override any previous value)
-  if (type === 'initial') {
-    group.stop_loss = stop_loss;
-    group.tags = h.tags || [];
-    group._fallbackSet = true; // prevent fallback from overwriting this
-  } else if (!group._fallbackSet) {
-    // If no 'initial' yet, set from first element (fallback)
-    group.stop_loss = stop_loss;
-    group.tags = h.tags || [];
-    group._fallbackSet = true;
-  }
-});
+        // If type is 'initial', set stop_loss and tags (override any previous value)
+        if (type === 'initial') {
+          group.stop_loss = stop_loss;
+          group.tags = h.tags || [];
+          group._fallbackSet = true; // prevent fallback from overwriting this
+        } else if (!group._fallbackSet) {
+          // If no 'initial' yet, set from first element (fallback)
+          group.stop_loss = stop_loss;
+          group.tags = h.tags || [];
+          group._fallbackSet = true;
+        }
+      });
 
 
       // Calculate avg_buy for each group
@@ -115,7 +117,7 @@ export class HoldingsPage {
       });
 
       // Convert Map to Array if needed
-       this.groupedHoldings = Array.from(groupedMap.values());
+      this.groupedHoldings = Array.from(groupedMap.values());
       // this.searchHolding = this.groupedHoldings;
       this.utilService.updateHoldingCountOnTabs(this.groupedHoldings.length);
       this.cd.detectChanges();
@@ -165,11 +167,11 @@ export class HoldingsPage {
       this.utilService.presentToast("top", "You have reached limit for new trade !", "failed")
   }
 
-  async presentAddHoldingModal(action, holding = {},groupHolding = {}) {
+  async presentAddHoldingModal(action, holding = {}, groupHolding = {}) {
     // if(action == 'add_more' || action == 'edit' || this.holdings.length < this.userSettingsService.user_settings?.max_holding_limit){
     const modal = await this.modalCtrl.create({
       component: AddHoldingComponent,
-      componentProps: { action: action, holding: holding, groupHolding:groupHolding, status: this.selectedStatusType.role }
+      componentProps: { action: action, holding: holding, groupHolding: groupHolding, status: this.selectedStatusType.role }
     });
     modal.present();
     const { data, role } = await modal.onWillDismiss();
@@ -288,15 +290,20 @@ export class HoldingsPage {
   }
 
   toggleBreakdown(index: number) {
-  this.groupedHoldings.forEach((h, i) => {
-    h.showBreakdown = i === index ? !h.showBreakdown : false;
-  });
-}
+    this.groupedHoldings.forEach((h, i) => {
+      h.showBreakdown = i === index ? !h.showBreakdown : false;
+    });
+  }
 
-  async actions(id,groupHoldingIndex,actionFor='holding') {
+  segmentChanged() {
+
+  }
+
+  async actions(id, groupHoldingIndex, actionFor = 'holding') {
+    console.log(actionFor)
     let buttons = []
-    if(actionFor == 'holding'){
-      buttons =[
+    if (actionFor == 'holding') {
+      buttons = [
         {
           text: 'Add More',
           role: 'add_more',
@@ -309,6 +316,13 @@ export class HoldingsPage {
           role: 'edit',
           data: {
             action: 'edit',
+          },
+        },
+        {
+          text: 'Details',
+          role: 'details',
+          data: {
+            action: 'details',
           },
         },
         {
@@ -341,7 +355,7 @@ export class HoldingsPage {
         },
       ]
     } else {
-       buttons =[
+      buttons = [
         {
           text: 'Add More',
           role: 'add_more',
@@ -349,7 +363,7 @@ export class HoldingsPage {
             action: 'add_more',
           },
         },
-        
+
         {
           text: 'Cancel',
           role: 'cancel',
@@ -372,16 +386,16 @@ export class HoldingsPage {
     switch (role) {
       case "add_more":
         // if (Number(groupHolding.stop_loss) > Number(groupHolding.buying_price)) {
-          this.presentAddHoldingModal('add_more',{}, groupHolding)
+        this.presentAddHoldingModal('add_more', {}, groupHolding)
         // } else {
-          // this.utilService.presentToast("top", "Can't add more P&L is in negative", "failed")
+        // this.utilService.presentToast("top", "Can't add more P&L is in negative", "failed")
         // }
         break;
       case "open-technical-tag":
         this.addTechnicalTags(holding)
         break;
       case "edit":
-        this.presentAddHoldingModal('edit', holding,groupHolding)
+        this.presentAddHoldingModal('edit', holding, groupHolding)
         break;
       // case "exit-holding":
       //   this.showSellingPriceModal()
@@ -391,7 +405,13 @@ export class HoldingsPage {
         break;
 
       case "completed":
-        this.firestoreService.updateHoldingStatus(holding.id, "completed")
+        this.firestoreService.updateHoldingStatus(holding.id, "completed");
+      case "details":
+        console.log(groupHolding)
+        this.router.navigate(['/holding-details'], {
+          state: { data: holding }
+        });
+        break;
     }
     // this.result = JSON.stringify(result, null, 2);
   }

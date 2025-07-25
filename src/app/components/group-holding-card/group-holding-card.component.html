@@ -1,0 +1,126 @@
+<ion-card>
+  <!-- ---------- MAIN GROUP ROW ---------- -->
+  <div class="details" (click)="onCardClick()">
+    <div class="container">
+      <div class="flex-row-space">
+        <div class="item">
+          <span class="title">Qty</span>
+          <span class="value">{{ groupHolding.quantity }}</span>
+        </div>
+      </div>
+
+      <div class="item mt-12">
+        <span class="name">{{ groupHolding.name }}</span>
+      </div>
+
+      <div class="item">
+        <span class="title">Invested</span>
+      </div>
+
+      <div class="item">
+        <span class="value">
+          {{
+            groupHolding.buying_price * groupHolding.quantity
+              | roundOff
+          }}
+        </span>
+      </div>
+    </div>
+
+    <div class="container text-right">
+      <div class="item">
+        <span
+          class="value"
+          [ngClass]="
+            (groupHolding.buying_price
+              | riskValue : groupHolding.stop_loss : groupHolding.quantity) > 0
+              ? 'positive'
+              : 'negative'
+          "
+        >
+          {{
+            groupHolding.buying_price
+              | riskValue : groupHolding.stop_loss : groupHolding.quantity
+          }}
+          <span class="pct">
+            ({{ groupHolding.buying_price | riskPercentage: groupHolding.stop_loss }}%)
+          </span>
+        </span>
+      </div>
+
+      <div class="item mt-12">
+        <span class="title">Avg</span>
+        <span class="value">{{ groupHolding.buying_price }}</span>
+      </div>
+
+      <div class="item">
+        <span class="title">SL/Exit</span>
+        <span class="value">{{ groupHolding.stop_loss }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- TAGS ---------- -->
+  <div class="selected-tags-container" *ngIf="groupHolding.tags.length > 0">
+    <ion-chip *ngFor="let tag of groupHolding.tags" class="selected-chip">
+      <ion-label>{{ tag?.label }}</ion-label>
+    </ion-chip>
+  </div>
+
+  <!-- ---------- BREAKDOWNS ---------- -->
+  <div class="breakdown_container" *ngIf="groupHolding.showBreakdown">
+    <div
+      *ngFor="let holding of groupHolding.breakdowns"
+      class="list"
+      (click)="onBreakdownClick(holding.id)"
+    >
+      <div class="details">
+        <div class="container">
+          <div class="flex-row-space">
+            <div class="item">
+              <span class="title">Qty</span>
+              <span class="value">{{ holding.quantity }}</span>
+            </div>
+          </div>
+
+          <div class="item">
+            <span class="value">
+              {{ holding.buying_price * holding.quantity | roundOff }}
+            </span>
+          </div>
+        </div>
+
+        <div class="container text-right">
+          <div class="item">
+            <span
+              class="value"
+              [ngClass]="
+                (holding.buying_price
+                  | riskValue : holding.stop_loss : holding.quantity) > 0
+                  ? 'positive'
+                  : 'negative'
+              "
+            >
+              {{
+                holding.buying_price
+                  | riskValue : holding.stop_loss : holding.quantity
+              }}
+            </span>
+            <span class="divider">|</span>
+            <span class="title">Age</span>
+            <span class="value">{{ holding.trade_date | age }}</span>
+          </div>
+
+          <div class="item">
+            <span class="title">Price</span>
+            <span class="value">{{ holding.buying_price }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="breakdown_label" (click)="onToggleBreakdown()">
+    {{ groupHolding.showBreakdown ? 'Hide' : 'Show' }} Breakdowns
+  </div>
+</ion-card>

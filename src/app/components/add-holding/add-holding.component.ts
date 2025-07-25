@@ -78,7 +78,8 @@ export class AddHoldingComponent implements OnInit {
 
     // Push risk option
     const maxSlAmount = Number(this.userSettingsService.user_settings?.max_sl_amount ?? 0);
-    this.riskOptions.push({ label: maxSlAmount.toString(), value: maxSlAmount.toString() });
+    this.riskOptions.push({ label: (maxSlAmount/2).toString(), value: (maxSlAmount/2).toString() });
+    console.log(this.riskOptions)
 
     // Handle form based on action
     switch (this.action) {
@@ -182,8 +183,9 @@ export class AddHoldingComponent implements OnInit {
     const val = this.addForm.get('selectedRisk')?.value;
     const pl = (this.groupHolding.stop_loss - this.groupHolding.buying_price) * this.groupHolding.quantity
     if (pl > 0) {
-      if (val === '5000') {
-        this.max_risk_value = 5000;
+       const maxSlAmount = Number(this.userSettingsService.user_settings?.max_sl_amount ?? 0);
+      if (val == maxSlAmount/2) {
+        this.max_risk_value = maxSlAmount/2;
       } else {
         const percentage = Number(val);
         this.max_risk_value = (Math.abs((this.groupHolding.stop_loss - this.groupHolding.buying_price) * this.groupHolding.quantity) * percentage) / 100;

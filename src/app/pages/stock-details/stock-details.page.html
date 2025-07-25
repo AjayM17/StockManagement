@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Stock Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="stock">
+    <h2>{{ stock.name }}</h2>
+    <p>Quantity: {{ stock.quantity }}</p>
+
+    <ion-img *ngIf="stock.imageUrl" [src]="stock.imageUrl" style="width: 200px; margin-bottom: 10px;"></ion-img>
+
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+
+    <ion-button expand="block" (click)="uploadImage()" [disabled]="!selectedFile || isUploading">
+      {{ isUploading ? 'Uploading...' : 'Upload New Image' }}
+    </ion-button>
+  </div>
+</ion-content>

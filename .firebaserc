@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "stock-management-188a4"
-  }
+    "default": "stock-management-188a4",
+    "staging": "stock-management-188a4",
+    "stock-app": "stock-management-188a4"
+  },
+  "targets": {},
+  "etags": {}
 }

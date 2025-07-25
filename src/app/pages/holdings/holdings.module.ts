@@ -12,6 +12,7 @@ import { CustomPipesModule } from '../../pipes/custom_pipes.module'
 import { TechnicalTagsComponent } from 'src/app/components/technical-tags/technical-tags.component';
 import { AddHoldingComponent } from 'src/app/components/add-holding/add-holding.component';
 import { HoldingActionsComponent } from 'src/app/components/holding-actions/holding-actions.component';
+import { GroupHoldingCardComponent } from 'src/app/components/group-holding-card/group-holding-card.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { HoldingActionsComponent } from 'src/app/components/holding-actions/hold
   ],
   declarations: [HoldingsPage,
     HoldingActionsComponent,
+    GroupHoldingCardComponent,
     AddHoldingComponent,TechnicalTagsComponent]
 })
 export class HoldingsPageModule {}

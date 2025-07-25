@@ -41,13 +41,32 @@
   <!-- <ion-searchbar style="background: white;" mode="ios" (ionChange)="search($event)"></ion-searchbar> -->
 </ion-header>
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let group_holding of groupedHoldings; let group_holding_index = index"  >
+  <ion-segment [(ngModel)]="segmentValue" style="display: none;">
+    <ion-segment-button value="active">
+      Active
+    </ion-segment-button>
+    <ion-segment-button value="waiting">
+      Waiting
+    </ion-segment-button>
+    <ion-segment-button value="completed">
+      Completed
+    </ion-segment-button>
+  </ion-segment>
+
+  <ng-container [ngSwitch]="segmentValue">
+    <div>
+      <app-group-holding-card *ngFor="let group_holding of groupedHoldings; let i = index"
+        [groupHolding]="group_holding" [index]="i" (cardAction)="actions($event.holdingId, $event.index, $event.type)"
+        (toggle)="toggleBreakdown($event)"></app-group-holding-card>
+    </div>
+    <div *ngSwitchCase="'waitingtest'">Content for Second</div>
+    <div *ngSwitchCase="'completedtest'">Content for Second</div>
+  </ng-container>
+  <!-- <ion-card *ngFor="let group_holding of groupedHoldings; let group_holding_index = index">
     <div class="details" (click)="actions(null,group_holding_index,'groupHolding')">
       <div class="container">
         <div style="display: flex; justify-content: space-between;align-items: center">
           <div class="item"><span class="title">Qty</span> <span class="value">{{group_holding.quantity}}</span></div>
-          <!-- <span>|</span>
-          <div class="item"><span class="title">Age</span>(<span class="value" style="margin-left: 0px;">{{group_holding.trade_date | age}}</span><span> days</span>)</div> -->
         </div>
 
         <div class="item" style="    margin-top: 12px;"><span class="name"> {{group_holding.name}}</span> </div>
@@ -61,14 +80,14 @@
         <div class="item"><span class="value" [ngClass]="(group_holding.buying_price |
           riskValue : group_holding['stop_loss']: group_holding['quantity']) > 0 ? 'positive':'negative'">
             <span>{{group_holding.buying_price |
-              riskValue : group_holding['stop_loss']: group_holding['quantity']}} </span> <span style="font-size: 11px;">
+              riskValue : group_holding['stop_loss']: group_holding['quantity']}} </span> <span
+              style="font-size: 11px;">
               ({{group_holding['buying_price'] |
               riskPercentage:group_holding['stop_loss']}}%)</span> </span> </div>
         <div class="item" style="    margin-top: 12px;"><span class="title">Avg</span> <span
             class="value">{{group_holding.buying_price}} </span></div>
-        <div class="item"><span class="title">SL/Exit</span> <span class="value">{{group_holding.stop_loss}}</span></div>
-        <!-- <div class="item"><span class="title">Follow</span> <span
-            class="value">{{group_holding.support_time_frame}}-{{group_holding.support_ema}}</span></div> -->
+        <div class="item"><span class="title">SL/Exit</span> <span class="value">{{group_holding.stop_loss}}</span>
+        </div>
       </div>
     </div>
 
@@ -79,13 +98,14 @@
     </div>
 
     <div class="breakdown_container" *ngIf="group_holding.showBreakdown">
-      <div *ngFor="let holding of group_holding.breakdowns" class="list" (click)="actions(holding.id,group_holding_index)">
+      <div *ngFor="let holding of group_holding.breakdowns" class="list"
+        (click)="actions(holding.id,group_holding_index)">
         <div class="details">
           <div class="container">
             <div style="display: flex; justify-content: space-between;align-items: center">
               <div class="item"><span class="title">Qty</span> <span class="value">{{holding.quantity}}</span></div>
             </div>
-           
+
             <div class="item"> <span class="value"> {{(holding.buying_price *
                 holding.quantity) | roundOff}}</span></div>
           </div>
@@ -94,16 +114,19 @@
             <div class="item"><span class="value" [ngClass]="(holding.buying_price |
           riskValue : holding['stop_loss']: holding['quantity']) > 0 ? 'positive':'negative'">
                 <span>{{holding.buying_price |
-                  riskValue : holding['stop_loss']: holding['quantity']}} </span> </span>  <span style="padding:0px 6px">|</span>   <span class="title">Age</span> <span class="value">{{holding.trade_date | age}}</span></div>
-            <div class="item" ><span class="title">Price</span> <span
-                class="value">{{holding.buying_price}} </span></div>
+                  riskValue : holding['stop_loss']: holding['quantity']}} </span> </span> <span
+                style="padding:0px 6px">|</span> <span class="title">Age</span> <span class="value">{{holding.trade_date
+                | age}}</span></div>
+            <div class="item"><span class="title">Price</span> <span class="value">{{holding.buying_price}} </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="breakdown_label" (click)="toggleBreakdown(group_holding_index)">{{ group_holding?.showBreakdown ? 'Hide' : 'Show' }} Breakdowns</div>
+    <div class="breakdown_label" (click)="toggleBreakdown(group_holding_index)">{{ group_holding?.showBreakdown ? 'Hide'
+      : 'Show' }} Breakdowns</div>
 
-  </ion-card>
+  </ion-card> -->
 
   <ion-modal style="--height: 200px;" [isOpen]="isSellingModalOpen" (willDismiss)="onWillDismiss($event)">
     <ng-template>
