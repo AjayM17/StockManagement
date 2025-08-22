@@ -158,7 +158,7 @@ export class AddHoldingComponent implements OnInit {
   enableAddButton() {
     if (this.addForm.controls.buying_price.value < 1 || this.addForm.controls.stop_loss.value < 1 || this.addForm.controls.quantity.value < 1) {
       this.enable = false
-      this.btnBg = "#222428"
+      this.btnBg = "#eb445a"
       return
     }
 
@@ -175,7 +175,7 @@ export class AddHoldingComponent implements OnInit {
       this.btnBg = "#3880ff"
     } else {
       this.enable = false
-      this.btnBg = "#222428"
+      this.btnBg = "#eb445a"
     }
   }
 

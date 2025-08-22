@@ -406,6 +406,7 @@ export class HoldingsPage {
 
       case "completed":
         this.firestoreService.updateHoldingStatus(holding.id, "completed");
+        break;
       case "details":
         console.log(groupHolding)
         this.router.navigate(['/holding-details'], {
